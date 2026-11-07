@@ -209,20 +209,25 @@ function initScene(dataList) {
             el.classList.add('tier-red');     // < $100K
         }
 
-        // Struktur Data Seperti Image B (Country kiri-atas, Age kanan-atas, Photo tengah, Name & Interest bawah)
+        // Struktur Data Seperti Image B (Rekaan Dua Muka: Tidak Terbalik dari Mana-mana Sudut 3D)
+        const cardInner = `
+          <div class="tile-header">
+            <span class="country" title="${item.country}">${item.country}</span>
+            <span class="age">${item.age}</span>
+          </div>
+          <div class="avatar-wrap">
+            <img src="${item.photo}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';" />
+          </div>
+          <div class="details">
+            <div class="name" title="${item.name}">${item.name}</div>
+            <div class="interest" title="${item.interest}">${item.interest}</div>
+          </div>
+        `;
+
         el.innerHTML = `
-      <div class="tile-header">
-        <span class="country" title="${item.country}">${item.country}</span>
-        <span class="age">${item.age}</span>
-      </div>
-      <div class="avatar-wrap">
-        <img src="${item.photo}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';" />
-      </div>
-      <div class="details">
-        <div class="name" title="${item.name}">${item.name}</div>
-        <div class="interest" title="${item.interest}">${item.interest}</div>
-      </div>
-    `;
+          <div class="card-face card-front">${cardInner}</div>
+          <div class="card-face card-back">${cardInner}</div>
+        `;
 
         const objectCSS = new CSS3DObject(el);
         objectCSS.position.x = Math.random() * 4000 - 2000;
