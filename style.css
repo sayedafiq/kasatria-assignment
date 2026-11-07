@@ -110,6 +110,7 @@ body {
     width: 140px;
     height: 180px;
     border-radius: 4px;
+    box-shadow: 0 0 12px rgba(0, 255, 255, 0.25);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -117,44 +118,37 @@ body {
     padding: 8px 10px 10px;
     text-align: center;
     user-select: none;
-    -webkit-user-select: none;
     cursor: default;
     position: relative;
-    /* Optimum Prestasi GPU Maksimum (Pantas untuk Table & Grid) */
-    contain: layout style paint;
-    will-change: transform;
-    transform: translateZ(0);
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-}
-
-/* Mengelakkan pengiraan hit-test pada 1,000+ elemen anak semasa tetikus bergerak */
-.element * {
-    pointer-events: none;
+    transition: box-shadow 0.2s ease;
 }
 
 .element:hover {
-    border-color: #ffffff !important;
+    box-shadow: 0 0 16px rgba(127, 255, 255, 0.85);
+    border-color: rgba(127, 255, 255, 0.95);
 }
 
 /* Pewarnaan Latar Belakang Nilai Bersih (Net Worth - Rujuk Image B) */
 .element.tier-red {
-    background-color: rgba(239, 48, 34, 0.9);
+    background-color: rgba(239, 48, 34, 0.85);
     /* #EF3022: < $100K */
     border: 1.5px solid #ef3022;
+    box-shadow: 0 0 10px rgba(239, 48, 34, 0.5);
 }
 
 .element.tier-orange {
-    background-color: rgba(253, 218, 36, 0.9);
+    background-color: rgba(253, 218, 36, 0.85);
     /* #FDDA24: $100K - $200K */
     border: 1.5px solid #fdda24;
     color: #111;
+    box-shadow: 0 0 10px rgba(253, 218, 36, 0.5);
 }
 
 .element.tier-green {
-    background-color: rgba(58, 159, 72, 0.9);
+    background-color: rgba(58, 159, 72, 0.85);
     /* #3A9F48: > $200K */
     border: 1.5px solid #3a9f48;
+    box-shadow: 0 0 10px rgba(58, 159, 72, 0.5);
 }
 
 /* Teks jelas untuk kad kuning/oren */
@@ -244,7 +238,7 @@ body {
 
 #menu button {
     color: rgba(127, 255, 255, 0.85);
-    background: rgba(0, 35, 35, 0.85);
+    background: rgba(0, 40, 40, 0.6);
     border: 1px solid rgba(127, 255, 255, 0.75);
     padding: 8px 20px;
     font-size: 13px;
@@ -252,7 +246,8 @@ body {
     letter-spacing: 1px;
     cursor: pointer;
     border-radius: 4px;
-    transition: background-color 0.2s ease, color 0.2s ease;
+    backdrop-filter: blur(4px);
+    transition: all 0.2s ease;
 }
 
 #menu button:hover,
