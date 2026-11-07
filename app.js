@@ -209,25 +209,20 @@ function initScene(dataList) {
             el.classList.add('tier-red');     // < $100K
         }
 
-        // Struktur Data Seperti Image B (Rekaan Dua Muka: Tidak Terbalik dari Mana-mana Sudut 3D)
-        const cardInner = `
-          <div class="tile-header">
-            <span class="country" title="${item.country}">${item.country}</span>
-            <span class="age">${item.age}</span>
-          </div>
-          <div class="avatar-wrap">
-            <img src="${item.photo}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';" />
-          </div>
-          <div class="details">
-            <div class="name" title="${item.name}">${item.name}</div>
-            <div class="interest" title="${item.interest}">${item.interest}</div>
-          </div>
-        `;
-
+        // Struktur Data Seperti Image B
         el.innerHTML = `
-          <div class="card-face card-front">${cardInner}</div>
-          <div class="card-face card-back">${cardInner}</div>
-        `;
+      <div class="tile-header">
+        <span class="country" title="${item.country}">${item.country}</span>
+        <span class="age">${item.age}</span>
+      </div>
+      <div class="avatar-wrap">
+        <img src="${item.photo}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';" />
+      </div>
+      <div class="details">
+        <div class="name" title="${item.name}">${item.name}</div>
+        <div class="interest" title="${item.interest}">${item.interest}</div>
+      </div>
+    `;
 
         const objectCSS = new CSS3DObject(el);
         objectCSS.position.x = Math.random() * 4000 - 2000;
@@ -246,7 +241,14 @@ function initScene(dataList) {
     container.appendChild(renderer.domElement);
 
     controls = new TrackballControls(camera, renderer.domElement);
-    controls.minDistance = 500;
+    controls.rotateSpeed = 1.0;
+    controls.zoomSpeed = 1.2;
+    controls.panSpeed = 0.8;
+    controls.noZoom = false;
+    controls.noPan = false;
+    controls.staticMoving = false;
+    controls.dynamicDampingFactor = 0.3;
+    controls.minDistance = 300;
     controls.maxDistance = 6000;
     controls.addEventListener('change', render);
 
@@ -316,6 +318,7 @@ function generateLayoutTargets(count) {
         vector.y = object.position.y;
         vector.z = object.position.z * 2;
         object.lookAt(vector);
+
         targets.helix.push(object);
     }
 
@@ -372,6 +375,7 @@ function animate() {
     requestAnimationFrame(animate);
     TWEEN.update();
     controls.update();
+    render();
 }
 
 function render() {
