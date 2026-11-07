@@ -216,7 +216,7 @@ function initScene(dataList) {
         <span class="age">${item.age}</span>
       </div>
       <div class="avatar-wrap">
-        <img src="${item.photo}" alt="${item.name}" loading="lazy" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';" />
+        <img src="${item.photo}" alt="${item.name}" decoding="async" onerror="this.onerror=null;this.src='${FALLBACK_AVATAR}';" />
       </div>
       <div class="details">
         <div class="name" title="${item.name}">${item.name}</div>
@@ -243,7 +243,10 @@ function initScene(dataList) {
     controls = new TrackballControls(camera, renderer.domElement);
     controls.minDistance = 500;
     controls.maxDistance = 6000;
-    controls.addEventListener('change', render);
+    controls.rotateSpeed = 1.0;
+    controls.zoomSpeed = 1.0;
+    controls.panSpeed = 0.8;
+    controls.dynamicDampingFactor = 0.2;
 
     // Sambungkan Fungsi Butang Pilihan Menu
     const buttons = {
@@ -348,12 +351,6 @@ function transform(targetsArray, duration) {
             .easing(TWEEN.Easing.Exponential.InOut)
             .start();
     }
-
-    // Gunakan objek kosong {} kerana 'this' adalah undefined di dalam ES Module
-    new TWEEN.Tween({})
-        .to({}, duration * 2)
-        .onUpdate(render)
-        .start();
 }
 
 function onWindowResize() {
@@ -367,6 +364,7 @@ function animate() {
     requestAnimationFrame(animate);
     TWEEN.update();
     controls.update();
+    render();
 }
 
 function render() {
